@@ -1,16 +1,34 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function HelpPage() {
+export default function HelpPage({ params }: any) {
   const [prompt, setPrompt] = useState('');
   const [response, setResponse] = useState('');
   const [displayedResponse, setDisplayedResponse] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    const getUsername = async () => {
+      const param = await params;
+      const paramUsername = param.username;
+      setUsername(paramUsername);
+    };
+    getUsername();
+  }, [params]);
+
+  const scanRef = useRef<HTMLDivElement>(null);
+  const scrollToScan = () => {
+    scanRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const handleSend = async () => {
     if (!prompt.trim()) return;
@@ -48,7 +66,17 @@ export default function HelpPage() {
   }, [response]);
 
   return (
+    
     <div className="max-w-3xl mx-auto px-4 py-10">
+       
+       {/* Circular Button with Dropdown */}
+        <div className="absolute top-4 right-4 z-50">
+        <Button variant="ghost" onClick={() => router.push(`/home/${username}`)}>
+            Home
+          </Button>
+          <Button variant="ghost">Logout</Button>
+        </div>
+
       <h1 className="text-4xl font-bold mb-8 text-center text-blue-700">
         What help do you need?
       </h1>

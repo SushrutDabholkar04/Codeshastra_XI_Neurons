@@ -1,15 +1,31 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Avatar } from '@/components/ui/avatar';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-const HomePage = () => {
+const HomePage = ({ params }: any) => {
   const scanRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const scrollToScan = () => {
+    scanRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    const getUsername = async () => {
+      const param = await params;
+      const paramUsername = param.username;
+      setUsername(paramUsername);
+    };
+    getUsername();
+  }, [params]);
 
   return (
     <main className="min-h-screen bg-gray-100">
@@ -21,10 +37,27 @@ const HomePage = () => {
 
         {/* Nav Items */}
         <div className="flex items-center gap-4">
-          <Button variant="ghost" onClick={() => router.push('/signup')}>
-            Signup
+          <Button variant="ghost" onClick={scrollToScan}>
+            Scan
           </Button>
-          <Button variant="ghost" onClick={() => router.push('/login')}>Login</Button>
+          <Button variant="ghost" onClick={() => router.push(`/help/${username}`)}>Help</Button>
+
+          {/* Circular Button with Dropdown */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Avatar className="cursor-pointer w-10 h-10 bg-gray-200" />
+            </PopoverTrigger>
+            <PopoverContent className="w-40 mt-2">
+              <div className="flex flex-col gap-2">
+                <Button variant="ghost" className="justify-start" onClick={() => router.push(`/myAccount/${username}`)}>
+                  My Account
+                </Button>
+                <Button variant="ghost" className="justify-start" >
+                  Logout
+                </Button>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </nav>
 
