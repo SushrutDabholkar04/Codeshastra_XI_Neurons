@@ -75,16 +75,19 @@ const HomePage = ({ params }: any) => {
                 title: 'Security',
                 img: '/Images/security.png',
                 desc: 'Get real-time alerts and messages for any object addition, removal, or repositioning detected through the camera feed—ensuring your space stays secure and monitored at all times.',
+                location: `scanSecurity/${username}`,
             },
             {
                 title: 'Inventory Management',
                 img: '/Images/inventoryManagement.png',
                 desc: 'Instantly view the exact positions of objects within the camera’s view. Easily track and manage your inventory with precise visual mapping.',
+                location: `scanInventory/${username}`,
             },
             {
                 title: 'Space Optimization',
                 img: '/Images/spaceOptimization.png',
                 desc: 'Analyze what space is occupied, what’s empty, and get smart suggestions on how to rearrange for maximum efficiency and better utilization.',
+                location: `scanSpace/${username}`,
             },
             ].map((feature, id) => (
             <motion.div
@@ -105,7 +108,7 @@ const HomePage = ({ params }: any) => {
                     <h3 className="text-xl font-semibold mb-2 text-center">{feature.title}</h3>
                     <p className="text-gray-700 mb-1 text-sm">{feature.desc}</p>
                     <div className="flex justify-center">
-                    <Button>Open</Button>
+                    <Button onClick={() => router.push(feature.location)}>Open</Button>
                     </div>
                 </CardContent>
                 </Card>
