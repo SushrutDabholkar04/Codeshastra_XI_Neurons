@@ -102,7 +102,7 @@ export default function MyAccountPage({params}: any) {
       </div>
 
       <div className="flex flex-col items-center justify-center gap-10 pt-16">
-        <h1 className="text-4xl font-bold">My Account Dashboard</h1>
+        <h1 className="text-4xl font-bold">Dashboard</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <FeatureCard title="Security" data={securityData} />
           <FeatureCard title="Inventory Management" data={inventoryData} />
