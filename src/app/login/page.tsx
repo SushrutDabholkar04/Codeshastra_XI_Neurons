@@ -15,22 +15,29 @@ export default function LoginPage({ params }: any) {
     const [loading, setLoading] = React.useState(false);
 
     const [username, setUsername] = useState("");
-      useEffect(() => {
-        const getUsername = async () => {
-          const param = await params;
-          const paramUsername = param.username;
-          setUsername(paramUsername);
-        };
-        getUsername();
-      }, [params]);
+
+    useEffect(() => {
+      const storedUsername = localStorage.getItem("username");
+      if (storedUsername) {
+        setUsername(storedUsername);
+      }
+    }, []);
+    
 
     const onLogin = async () => {
         try {
             setLoading(true);
             const response = await axios.post("/api/users/login", user);
+            const { token, username } = response.data;
+            console.log("Login response:", response.data);
+
+            localStorage.setItem("token", token);
+            localStorage.setItem("username", username);
+            console.log(localStorage.getItem("username")); // should be "Pushkar"
+
             console.log("Login success", response.data);
             toast.success("Login success");
-            router.push(`/home/${username}`);
+            router.push(`/home/${username}`); 
         } catch (error:any) {
             console.log("Login failed", error.message);
             toast.error(error.message);

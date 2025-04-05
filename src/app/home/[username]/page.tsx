@@ -8,8 +8,10 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Avatar } from '@/components/ui/avatar';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import ImageGlider from '@/components/ImageGlider';
 
 const HomePage = ({ params }: any) => {
+  const [username, setUsername] = useState<string | null>(null);
   const scanRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -17,15 +19,18 @@ const HomePage = ({ params }: any) => {
     scanRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const [username, setUsername] = useState("");
   useEffect(() => {
-    const getUsername = async () => {
-      const param = await params;
-      const paramUsername = param.username;
-      setUsername(paramUsername);
-    };
-    getUsername();
-  }, [params]);
+    const name = localStorage.getItem("username");
+    setUsername(name);
+    console.log("Username from localStorage:", name);
+  }, []);
+
+  if (username === null) return <div>Loading...</div>;
+
+  const handleLogout = () => {
+    localStorage.clear();
+    router.push('/login');
+  };
 
   return (
     <main className="min-h-screen bg-gray-100">
@@ -52,7 +57,7 @@ const HomePage = ({ params }: any) => {
                 <Button variant="ghost" className="justify-start" onClick={() => router.push(`/myAccount/${username}`)}>
                   My Account
                 </Button>
-                <Button variant="ghost" className="justify-start" >
+                <Button variant="ghost" className="justify-start" onClick={() => router.push(`/home`)}>
                   Logout
                 </Button>
               </div>
@@ -63,7 +68,8 @@ const HomePage = ({ params }: any) => {
 
       {/* Landing Section */}
       <section className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-white pt-20">
-        <h1 className="text-5xl font-bold text-gray-800">Welcome to <span className="text-blue-600">Scanner</span></h1>
+        <ImageGlider />
+        <h1 className="text-5xl font-bold text-gray-800 pb-12">Welcome to <span className="text-blue-600">Scanner</span></h1>
       </section>
 
       {/* Scan Section */}

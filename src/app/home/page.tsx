@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import ImageGlider from '@/components/ImageGlider';
 
 const HomePage = () => {
   const scanRef = useRef<HTMLDivElement>(null);
@@ -30,7 +31,8 @@ const HomePage = () => {
 
       {/* Landing Section */}
       <section className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-white pt-20">
-        <h1 className="text-5xl font-bold text-gray-800">Welcome to <span className="text-blue-600">Scanner</span></h1>
+        <h1 className="text-5xl font-bold text-gray-800 pb-12">Welcome to <span className="text-blue-600">Scanner</span></h1>
+        <ImageGlider />
       </section>
 
       {/* Scan Section */}
