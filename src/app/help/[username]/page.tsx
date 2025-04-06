@@ -74,7 +74,7 @@ export default function HelpPage({ params }: any) {
         <Button variant="ghost" onClick={() => router.push(`/home/${username}`)}>
             Home
           </Button>
-          <Button variant="ghost">Logout</Button>
+          <Button variant="ghost" onClick={() => router.push(`/home`)}>Logout</Button>
         </div>
 
       <h1 className="text-4xl font-bold mb-8 text-center text-blue-700">

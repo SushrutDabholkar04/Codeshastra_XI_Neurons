@@ -22,14 +22,22 @@ running = False
 
 def extract_object_info(result):
     detected = {}
+    clothing_keywords = {"clothing","shirt", "t-shirt", "pants", "jeans", "jacket", "sweater", "hoodie", "shorts", "dress", "skirt", "coat", "uniform"}
+
     for box in result.boxes:
         cls_id = int(box.cls[0].item())
-        label = model.names[cls_id]
+        label = model.names[cls_id].lower()
+
+        # Skip if the label contains clothing-related words
+        if any(cloth in label for cloth in clothing_keywords):
+            continue
+
         xyxy = box.xyxy[0].cpu().numpy()
         center = ((xyxy[0] + xyxy[2]) / 2, (xyxy[1] + xyxy[3]) / 2)
         if label not in detected:
             detected[label] = []
         detected[label].append(center)
+
     return detected
 
 def compare_objects(prev, current, threshold=50):
