@@ -18,7 +18,7 @@ export default function LoginPage({ params }: any) {
 
     useEffect(() => {
       const storedUsername = localStorage.getItem("username");
-      if (storedUsername) {
+      if (storedUsername) { 
         setUsername(storedUsername);
       }
     }, []);
@@ -55,32 +55,52 @@ export default function LoginPage({ params }: any) {
     }, [user]);
 
     return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-        <h1>{loading ? "Processing" : "Login"}</h1>
-        <hr />
-        
-        <label htmlFor="email">email</label>
-        <input 
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-            id="email"
-            type="text"
-            value={user.email}
-            onChange={(e) => setUser({...user, email: e.target.value})}
-            placeholder="email"
-            />
-        <label htmlFor="password">password</label>
-        <input 
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-            id="password"
-            type="password"
-            value={user.password}
-            onChange={(e) => setUser({...user, password: e.target.value})}
-            placeholder="password"
-            />
-            <button
-            onClick={onLogin}
-            className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">Login here</button>
-            <Link href="/signup">Visit Signup page</Link>
+        <div className="flex flex-col items-center justify-center min-h-screen py-8 px-4 bg-gray-50">
+            <div className="max-w-md w-full bg-white p-6 rounded-lg shadow-lg">
+                <h1 className="text-2xl font-semibold text-center mb-6">{loading ? "Processing..." : "Login"}</h1>
+                <hr className="mb-4" />
+
+                <div className="mb-4">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        id="email"
+                        type="text"
+                        value={user.email}
+                        onChange={(e) => setUser({ ...user, email: e.target.value })}
+                        placeholder="Enter your email"
+                    />
+                </div>
+
+                <div className="mb-6">
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        id="password"
+                        type="password"
+                        value={user.password}
+                        onChange={(e) => setUser({ ...user, password: e.target.value })}
+                        placeholder="Enter your password"
+                    />
+                </div>
+
+                <button
+                    onClick={onLogin}
+                    disabled={buttonDisabled || loading}
+                    className={`w-full p-3 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                        buttonDisabled || loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+                    }`}
+                >
+                    {loading ? "Logging in..." : "Login"}
+                </button>
+
+                <div className="mt-4 text-center">
+                    <span className="text-sm text-gray-600">
+                        Don't have an account?{" "}
+                        <Link href="/signup" className="text-blue-500 hover:text-blue-600">Sign up</Link>
+                    </span>
+                </div>
+            </div>
         </div>
-    )
+    );
 }

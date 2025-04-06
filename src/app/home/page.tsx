@@ -18,7 +18,7 @@ const HomePage = () => {
       <nav className="flex items-center justify-between p-4 fixed top-0 left-0 right-0 z-50 bg-transparent shadow-none">
 
         {/* Logo */}
-        <div className="text-xl font-bold">Scanner</div>
+        <div className="text-xl font-bold">  </div>
 
         {/* Nav Items */}
         <div className="flex items-center gap-4">
@@ -31,7 +31,16 @@ const HomePage = () => {
 
       {/* Landing Section */}
       <section className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-white pt-20">
-        <h1 className="text-5xl font-bold text-gray-800 pb-12">Welcome to <span className="text-blue-600">Scanner</span></h1>
+      <h1 className="text-5xl font-bold text-gray-800 pb-12 flex items-center gap-3">
+          Welcome to
+          <Image 
+            src="/Images/detectify.png" 
+            alt="Detectify Logo" 
+            width={250} 
+            height={150} 
+            className="inline-block object-contain mt-6" 
+          />
+        </h1>
         <ImageGlider />
       </section>
 
@@ -74,7 +83,7 @@ const HomePage = () => {
                     <h3 className="text-xl font-semibold mb-2 text-center">{feature.title}</h3>
                     <p className="text-gray-700 mb-1 text-sm">{feature.desc}</p>
                     <div className="flex justify-center">
-                    <Button>Open</Button>
+                    {/* <Button>Open</Button> */}
                     </div>
                 </CardContent>
                 </Card>
@@ -82,6 +91,9 @@ const HomePage = () => {
             ))}
         </div>
         </section>
+        <div className="pt-8 pb-8 text-center text-sm text-slate-500 dark:text-slate-400">
+          <p>Detectify App • {new Date().getFullYear()}</p>
+        </div>
     </main>
   );
 };

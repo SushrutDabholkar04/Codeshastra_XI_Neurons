@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Avatar } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import ImageGlider from '@/components/ImageGlider';
@@ -49,7 +49,7 @@ const HomePage = ({ params }: any) => {
       <nav className="flex items-center justify-between p-4 fixed top-0 left-0 right-0 z-50 bg-transparent shadow-none">
 
         {/* Logo */}
-        <div className="text-xl font-bold">Scanner</div>
+        <div className="text-xl font-bold">  </div>
 
         {/* Nav Items */}
         <div className="flex items-center gap-4">
@@ -61,7 +61,10 @@ const HomePage = ({ params }: any) => {
           {/* Circular Button with Dropdown */}
           <Popover>
             <PopoverTrigger asChild>
-              <Avatar className="cursor-pointer w-10 h-10 bg-gray-200" />
+            <Avatar className="cursor-pointer w-10 h-10">
+              <AvatarImage src="/Images/Avatar.webp" alt="User Avatar" />
+              {/* <AvatarFallback>A</AvatarFallback> */}
+            </Avatar>
             </PopoverTrigger>
             <PopoverContent className="w-40 mt-2">
               <div className="flex flex-col gap-2">
@@ -143,6 +146,10 @@ const HomePage = ({ params }: any) => {
             ))}
         </div>
         </section>
+        {/* Footer */}
+        <div className="pt-8 pb-8 text-center text-sm text-slate-500 dark:text-slate-400">
+          <p>Detectify App • {new Date().getFullYear()}</p>
+        </div>
     </main>
   );
 };
