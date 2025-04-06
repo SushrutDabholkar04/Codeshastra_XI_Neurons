@@ -9,7 +9,7 @@ import { Avatar } from '@/components/ui/avatar';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import ImageGlider from '@/components/ImageGlider';
-
+import axios from 'axios';
 const HomePage = ({ params }: any) => {
   const [username, setUsername] = useState<string | null>(null);
   const scanRef = useRef<HTMLDivElement>(null);
@@ -27,10 +27,21 @@ const HomePage = ({ params }: any) => {
 
   if (username === null) return <div>Loading...</div>;
 
-  const handleLogout = () => {
-    localStorage.clear();
-    router.push('/login');
-  };
+  const handleLogout = async () => {
+    try {
+    // Send a request to logout API (optional, depends on your backend)
+    await axios.get("/api/users/logout");
+   
+    // Clear user data from localStorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+   
+    // Redirect to home page after successful logout
+    router.push('/home');
+    } catch (error) {
+    console.error("Logout failed", error);
+    }
+   };
 
   return (
     <main className="min-h-screen bg-gray-100">
@@ -57,7 +68,7 @@ const HomePage = ({ params }: any) => {
                 <Button variant="ghost" className="justify-start" onClick={() => router.push(`/myAccount/${username}`)}>
                   My Account
                 </Button>
-                <Button variant="ghost" className="justify-start" onClick={() => router.push(`/home`)}>
+                <Button variant="ghost" className="justify-start" onClick={handleLogout}>
                   Logout
                 </Button>
               </div>
@@ -69,7 +80,17 @@ const HomePage = ({ params }: any) => {
       {/* Landing Section */}
       <section className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-white pt-20">
         <ImageGlider />
-        <h1 className="text-5xl font-bold text-gray-800 pb-12">Welcome to <span className="text-blue-600">Scanner</span></h1>
+        <h1 className="text-5xl font-bold text-gray-800 pb-12 flex items-center gap-3">
+          Welcome to
+          <Image 
+            src="/Images/detectify.png" 
+            alt="Detectify Logo" 
+            width={250} 
+            height={150} 
+            className="inline-block object-contain mt-6" 
+          />
+        </h1>
+        {/* <h1 className="text-5xl font-bold text-gray-800 pb-12">Welcome to <span className="text-blue-600">Scanner</span></h1> */}
       </section>
 
       {/* Scan Section */}
