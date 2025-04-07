@@ -4,6 +4,7 @@ import json
 from collections import defaultdict
 import sys
 
+
 # Load YOLOv8 model
 model = YOLO("yolov8n-oiv7.pt")  # Replace with your model if needed
 
@@ -89,12 +90,14 @@ after_counts = extract_inventory_counts(after_result)
 before_output = format_inventory_output(before_counts) #required
 after_output = format_inventory_output(after_counts) #required
 
+final_before_required = json.dumps(before_output, indent=2)
+final_after_required = json.dumps(after_output, indent=2)
 # Print as JSON
 print("\n📦 BEFORE INVENTORY:")
-print(json.dumps(before_output, indent=2))
+print(final_before_required)
 
 print("\n📦 AFTER INVENTORY:")
-print(json.dumps(after_output, indent=2))
+print(final_after_required)
 
 # Filter results for visualization
 filtered_before = filter_inventory_result(before_result)
